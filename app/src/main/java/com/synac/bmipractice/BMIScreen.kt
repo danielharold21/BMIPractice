@@ -51,12 +51,6 @@ fun BMIScreen(
     val shareIntent = Intent.createChooser(sendIntent, null)
     val context = LocalContext.current
 
-    Button(onClick = {
-
-    }){
-        Text("Share")
-    }
-
     LaunchedEffect(key1 = state.shouldSheetShow) {
         if (state.shouldSheetShow) bottomSheetState.expand()
         else bottomSheetState.collapse()
@@ -230,26 +224,17 @@ fun BMIScreen(
                                     verticalArrangement = Arrangement.SpaceEvenly
                                 ) {
                                     SymbolButton(
-                                        modifier = Modifier
-                                            .aspectRatio(1f)
-                                            .weight(1f),
                                         symbol = "AC",
                                         onClick = {
                                             viewModel.onAction(BMIActions.AllClear)
                                         }
                                     )
                                     SymbolButtonWithIcon(
-                                        modifier = Modifier
-                                            .aspectRatio(1f)
-                                            .weight(1f),
                                         onClick = {
                                             viewModel.onAction(BMIActions.Delete)
                                         }
                                     )
                                     SymbolButton(
-                                        modifier = Modifier
-                                            .aspectRatio(1f)
-                                            .weight(1f),
                                         symbol = "GO",
                                         onClick = {
                                             viewModel.onAction(BMIActions.GoButton)
@@ -258,10 +243,8 @@ fun BMIScreen(
                                 }
                             }
                         }
-
                     }
                 }
-
             }
         }
     }

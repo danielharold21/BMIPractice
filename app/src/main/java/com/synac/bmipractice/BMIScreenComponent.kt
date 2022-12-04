@@ -104,19 +104,20 @@ fun NumberButton(
 }
 
 @Composable
-fun SymbolButton(
+fun ColumnScope.SymbolButton(
     symbol: String,
     onClick: () -> Unit = {},
-    modifier: Modifier
 ) {
     Box(
         contentAlignment = Alignment.Center,
-        modifier = modifier
+        modifier = Modifier
             .padding(20.dp)
             .clip(RoundedCornerShape(15.dp))
             .background(CustomGray)
             .clickable { onClick() }
             .padding(15.dp)
+            .weight(1f)
+            .aspectRatio(1f)
     ) {
         Text(
             text = symbol,
@@ -127,18 +128,19 @@ fun SymbolButton(
 }
 
 @Composable
-fun SymbolButtonWithIcon(
-    onClick: () -> Unit = {},
-    modifier: Modifier
+fun ColumnScope.SymbolButtonWithIcon(
+    onClick: () -> Unit = {}
 ) {
     Box(
         contentAlignment = Alignment.Center,
-        modifier = modifier
+        modifier = Modifier
             .padding(20.dp)
             .clip(RoundedCornerShape(15.dp))
             .background(CustomGray)
             .clickable { onClick() }
             .padding(15.dp)
+            .weight(1f)
+            .aspectRatio(1f)
     ) {
         Icon(
             painter = painterResource(R.drawable.ic_backspace),
