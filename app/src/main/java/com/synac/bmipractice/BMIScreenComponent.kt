@@ -5,6 +5,9 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Divider
@@ -53,10 +56,10 @@ fun UnitItem(
 }
 
 @Composable
-fun InputUnitItem(
-    inputNo: String,
+fun InputUnitValue(
+    inputValue: String,
     inputUnit: String,
-    onInputNoClick: (String) -> Unit,
+    onInputValueClick: (String) -> Unit,
     inputNoColor: Color
 ) {
     Column(
@@ -67,10 +70,10 @@ fun InputUnitItem(
                 interactionSource = MutableInteractionSource(),
                 indication = null,
                 onClick = {
-                    onInputNoClick(inputNo)
+                    onInputValueClick(inputValue)
                 }
             ),
-            text = inputNo,
+            text = inputValue,
             fontSize = 40.sp,
             color = inputNoColor,
         )
@@ -78,6 +81,34 @@ fun InputUnitItem(
             text = inputUnit,
             fontSize = 12.sp,
         )
+    }
+}
+
+@Composable
+fun NumberKeyboard(
+    modifier: Modifier = Modifier,
+    onNumberClick: (String) -> Unit
+) {
+    Column(
+        modifier = modifier
+    ) {
+        val numberButtonList = listOf(
+            "7", "8", "9", "4", "5", "6",
+            "1", "2", "3", "", "0", "."
+        )
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(3)
+        ) {
+            items(numberButtonList) { item ->
+                NumberButton(
+                    modifier = Modifier
+                        .aspectRatio(1f)
+                        .weight(1f),
+                    number = item,
+                    onClick = onNumberClick
+                )
+            }
+        }
     }
 }
 
@@ -149,7 +180,6 @@ fun ColumnScope.SymbolButtonWithIcon(
         )
     }
 }
-
 
 @Composable
 fun BMIResultCard(
@@ -251,7 +281,6 @@ fun BMIResultCard(
             Text(text = "25.0", fontSize = 18.sp, color = Color.DarkGray)
             Text(text = "40.0", fontSize = 18.sp, color = Color.DarkGray)
         }
-
     }
 }
 
@@ -282,50 +311,42 @@ fun BottomSheetContent(
     onItemClicked: (String) -> Unit,
     onCancelClicked: () -> Unit
 ) {
-    Column(
+    Text(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(15.dp)
-    ) {
-        Text(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(10.dp),
-            text = sheetTitle,
-            fontWeight = FontWeight.Bold,
-            textAlign = TextAlign.Center
-        )
-        sheetItemsList.forEach { item ->
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable { onItemClicked(item) }
-            ) {
-                Text(
-                    modifier = Modifier.padding(15.dp),
-                    text = item,
-                )
-            }
-        }
-        Spacer(modifier = Modifier.height(20.dp))
+            .padding(10.dp),
+        text = sheetTitle,
+        fontWeight = FontWeight.Bold,
+        textAlign = TextAlign.Center
+    )
+    sheetItemsList.forEach { item ->
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .clip(RoundedCornerShape(15.dp))
-                .background(CustomGray)
-                .clickable { onCancelClicked() },
-            contentAlignment = Alignment.Center
+                .clickable { onItemClicked(item) }
         ) {
             Text(
                 modifier = Modifier.padding(15.dp),
-                text = "Cancel",
-                textAlign = TextAlign.Center
+                text = item,
             )
         }
     }
+    Spacer(modifier = Modifier.height(20.dp))
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(15.dp))
+            .background(CustomGray)
+            .clickable { onCancelClicked() },
+        contentAlignment = Alignment.Center
+    ) {
+        Text(
+            modifier = Modifier.padding(15.dp),
+            text = "Cancel",
+            textAlign = TextAlign.Center
+        )
+    }
 }
-
-
 
 @Preview(showBackground = true)
 @Composable
